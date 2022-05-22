@@ -918,7 +918,8 @@ elseif(${PLAYER_TARGET_PLATFORM} STREQUAL "psvita")
 		ScePgf_stub
 		ScePower_stub
 		SceCommonDialog_stub
-		SceAudio_stub)
+		SceAudio_stub
+		SceAppMgr_stub)
 	vita_create_self(eboot.bin easyrpg-player $<$<NOT:CONFIG:Debug>:STRIPPED>)
 	set(VITA_MKSFOEX_FLAGS "-d ATTRIBUTE2=12")
 	# a kludge to match the valid version format
