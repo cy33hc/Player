@@ -1073,7 +1073,6 @@ elseif(${PLAYER_TARGET_PLATFORM} MATCHES "^(psvita|3ds|switch|wii)$")
 			${CMAKE_CURRENT_BINARY_DIR}/resources/wii/meta.xml
 			DESTINATION easyrpg-player COMPONENT wii)
 	elseif(VITA)
-		set(CMAKE_EXECUTABLE_SUFFIX .elf)
 		target_link_libraries(easyrpg-player
 			${PROJECT_NAME}
 			vita2d
@@ -1090,7 +1089,7 @@ elseif(${PLAYER_TARGET_PLATFORM} MATCHES "^(psvita|3ds|switch|wii)$")
 			SceCommonDialog_stub
 			SceAudio_stub
 			SceAppMgr_stub)
-		vita_create_self(eboot.bin easyrpg-player.elf $<$<NOT:CONFIG:Debug>:STRIPPED>)
+		vita_create_self(eboot.bin easyrpg-player $<$<NOT:CONFIG:Debug>:STRIPPED>)
 		set(VITA_MKSFOEX_FLAGS "-d ATTRIBUTE2=12")
 		configure_file(resources/psvita/template.xml.in resources/psvita/template.xml @ONLY)
 		vita_create_vpk(EasyRPG-Player.vpk "EASYRPG01" eboot.bin
