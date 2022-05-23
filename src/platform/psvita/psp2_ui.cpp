@@ -122,7 +122,7 @@ static int renderThread(unsigned int args, void* arg){
 		}
 
 		vita2d_clear_screen();
-		if (!is_pstv && touch_texture && zoom_state != 2) {
+		if (touch_texture && zoom_state != 2) {
 			vita2d_draw_texture(touch_texture, 0, 0);
 		}
 
@@ -139,7 +139,7 @@ static int renderThread(unsigned int args, void* arg){
 		}
 
 		// draw touched keys
-		if (!is_pstv && touch_texture && zoom_state != 2) {
+		if (touch_texture && zoom_state != 2) {
 			for (int i = 0; i < 16; ++i) {
 				if (touched_buttons[i]) {
 					vita2d_draw_rectangle(i < 8 ? 0 : touch_buttons_right_x,
@@ -209,9 +209,7 @@ Psp2Ui::Psp2Ui(int width, int height, const Game_ConfigVideo& cfg) : BaseUi(cfg)
 	
 	sceCtrlSetSamplingMode(SCE_CTRL_MODE_ANALOG_WIDE);
 	sceCtrlSetSamplingModeExt(SCE_CTRL_MODE_ANALOG_WIDE);
-	if (!is_pstv) {
-		sceTouchSetSamplingState(SCE_TOUCH_PORT_FRONT, SCE_TOUCH_SAMPLING_STATE_START);
-	}
+	sceTouchSetSamplingState(SCE_TOUCH_PORT_FRONT, SCE_TOUCH_SAMPLING_STATE_START);
 	
 	GPU_Mutex = sceKernelCreateSema("GPU Mutex", 0, 1, 1, nullptr);
 	GPU_Cleanup_Mutex = sceKernelCreateSema("GPU Cleanup Mutex", 0, 1, 1, nullptr);
@@ -288,7 +286,7 @@ void Psp2Ui::ProcessEvents() {
 	keys[Input::Keys::JOY_AXIS_Y_UP] = (input.ly < 50);
 
 	// Touchpad support
-	if (zoom_state != 2 && !is_pstv) {
+	if (zoom_state != 2) {
 		old_state = shader_trigger;
 		shader_trigger = false;
 
